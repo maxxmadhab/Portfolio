@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+
+
+:root {
+  --neon: #00ff87;
+  --cyan: #00d4ff;
+  --orange: #ff6b2b;
+  --dark: rgba(8, 8, 8, 0.0);     /* fully transparent — bg image shows through */
+  --card: rgba(10, 10, 10, 0.70); /* card/section surfaces — semi-transparent */
+  --card2: rgba(15, 15, 15, 0.65);
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hover: rgba(0, 255, 135, 0.25);
+  --muted: #555;
+  --text: #e8e8e8;
+}
+ 
+/* ── Reset / base ── */
+* { box-sizing: border-box; scroll-behavior: smooth; }
+ 
+body {
+  background: transparent;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+ 
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #080808; }
+::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 2px; }
+ 
+/* ── Selection ── */
+::selection { background: var(--neon); color: #000; }
+ 
+/* ── Font helpers ── */
+.font-display { font-family: 'Syne', sans-serif; }
+.font-mono    { font-family: 'JetBrains Mono', monospace; }
+.font-sans    { font-family: 'DM Sans', sans-serif; }
+ 
+/* ──────────────────────────────────────────────────────────────
+   NOISE GRAIN OVERLAY
+   Fixed on top of the bg image but below content (z-[2])
+   ────────────────────────────────────────────────────────────── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   SECTIONS — semi-transparent so bg shows through
+   ────────────────────────────────────────────────────────────── */
+ 
+/* Even sections (about, contact) — slightly darker tint */
+#about,
+#contact {
+  background: rgba(6, 6, 6, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+ 
+/* Odd sections (hero, projects, skills) — lighter tint */
+#hero,
+#projects,
+#skills {
+  background: rgba(8, 8, 8, 0.35);
+}
+ 
+/* ── Cards & panels ── */
+.card-surface {
+  background: rgba(10, 10, 10, 0.72);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+ 
+/* Override Tailwind bg-[#0f0f0f] on cards to be transparent-friendly */
+.bg-\[\#0f0f0f\] {
+  background-color: rgba(15, 15, 15, 0.72) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.bg-\[\#0a0a0a\] {
+  background-color: rgba(10, 10, 10, 0.60) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+ 
+/* Border colours */
+.border-\[\#1a1a1a\] { border-color: rgba(255,255,255,0.07) !important; }
+.border-\[\#1f1f1f\] { border-color: rgba(255,255,255,0.08) !important; }
+ 
+/* ──────────────────────────────────────────────────────────────
+   DOT GRID — very subtle on hero
+   ────────────────────────────────────────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   GLOW EFFECTS
+   ────────────────────────────────────────────────────────────── */
+.glow-text {
+  text-shadow: 0 0 20px rgba(0,255,135,0.55), 0 0 60px rgba(0,255,135,0.2);
+}
+.glow-border {
+  box-shadow: 0 0 0 1px rgba(0,255,135,0.3), 0 0 30px rgba(0,255,135,0.06);
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   ANIMATIONS
+   ────────────────────────────────────────────────────────────── */
+@keyframes fadeUp   { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:none; } }
+@keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+@keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:0; } }
+@keyframes float    { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+@keyframes pulse-dot { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.4); opacity:0.6; } }
+@keyframes spin     { to { transform: rotate(360deg); } }
+ 
+.animate-fade-up   { animation: fadeUp 0.7s ease forwards; }
+.animate-fade-in   { animation: fadeIn 0.5s ease forwards; }
+.animate-blink     { animation: blink 1s step-end infinite; }
+.animate-float     { animation: float 4s ease-in-out infinite; }
+.animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+.animate-spin      { animation: spin 0.8s linear infinite; }
+ 
+.delay-100 { animation-delay:.1s; }
+.delay-200 { animation-delay:.2s; }
+.delay-300 { animation-delay:.3s; }
+.delay-400 { animation-delay:.4s; }
+.delay-500 { animation-delay:.5s; }
+.delay-600 { animation-delay:.6s; }
+ 
+/* ──────────────────────────────────────────────────────────────
+   BUTTONS
+   ────────────────────────────────────────────────────────────── */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  background: var(--neon);
+  color: #000;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+.btn-primary:hover::after { transform: translateX(0); }
+ 
+.btn-outline {
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: all 0.3s ease;
+}
+.btn-outline:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   SECTION TITLE
+   ────────────────────────────────────────────────────────────── */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--neon);
+  margin-top: 10px;
+  border-radius: 2px;
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   INPUT FIELDS
+   ────────────────────────────────────────────────────────────── */
+.input-field {
+  background: rgba(15,15,15,0.70);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(4px);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.input-field:focus {
+  outline: none;
+  border-color: var(--neon);
+  box-shadow: 0 0 0 3px rgba(0,255,135,0.08);
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   PROJECT CARDS
+   ────────────────────────────────────────────────────────────── */
+.project-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,255,135,0.08);
+  border-color: rgba(0,255,135,0.3);
+}
+ 
+/* ──────────────────────────────────────────────────────────────
+   SKILL BARS
+   ────────────────────────────────────────────────────────────── */
+.skill-bar-fill {
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+ 
