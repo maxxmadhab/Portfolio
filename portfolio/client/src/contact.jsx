@@ -147,7 +147,7 @@ export default function Contact() {
                 href="mailto:you@email.com"
                 className="font-mono text-sm text-[#00ff87] hover:opacity-70 transition-opacity"
               >
-                you@email.com
+                madhab.padhi.23cse@bmu.edu.in
               </a>
             </div>
 
