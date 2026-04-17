@@ -8,11 +8,16 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "https://port-opal-beta.vercel.app",
+  "http://localhost:5173",
+].filter(Boolean);
 
 // ── Middleware ──────────────────────────────────────────────
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
   })
